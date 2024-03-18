@@ -4,6 +4,7 @@ dist
 wrangler.toml
 .dev.vars
 .env
+routes
 
 # Change them to your taste:
 package-lock.json
