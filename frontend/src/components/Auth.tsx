@@ -24,7 +24,7 @@ function Auth({ type }: { type: 'signup' | 'login'} ) {
         const jwt = response.data;
         console.log(jwt)
         localStorage.setItem('token',jwt.token);
-        navigate("/blogs");
+        navigate("/");
        } catch (error:any){
         console.log(error.response.data.msg);
         toast(error.response.data.msg)

@@ -3,6 +3,7 @@ import AppBar from "../components/AppBar"
 import BlogCard from "../components/BlogCard"
 import useBlog from "../hooks/useBlog"
 import { BlogSkeleton } from "../components/BlogSkeleton";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -11,6 +12,10 @@ import { BlogSkeleton } from "../components/BlogSkeleton";
 
 function Blogs(){
   const { loading , blogs}  = useBlog();
+  const navigate = useNavigate()
+  if(!localStorage.getItem('token')){
+    navigate('/login')
+  }
   if(loading){
     return <div>
       <AppBar/>

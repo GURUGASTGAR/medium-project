@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Circle } from "../components/BlogCard"
 import { BlogSkeleton } from "../components/BlogSkeleton";
 import { usePost } from "../hooks/useBlog"
@@ -22,7 +22,11 @@ import AppBar from "../components/AppBar";
 const Blog = () => {
   const param = useParams();
   const id = param.id 
+  const navigate = useNavigate();
   console.log(id)
+  if(!localStorage.getItem('token')){
+    navigate('/login')
+  }
 const {loading,blog} = usePost({
   id
 });
