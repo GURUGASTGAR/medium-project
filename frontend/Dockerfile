@@ -1,4 +1,4 @@
-FROM node:20.10.0
+FROM node:20.10.0-slim
 
 WORKDIR /app
 
@@ -9,8 +9,9 @@ RUN npm install
 COPY . .
 
 RUN  npm run build
-RUN  npm install -g serve
+RUN  npm install -g http-server
 
 EXPOSE 3000
+EXPOSE 5173
 
-CMD ['serve']
+CMD ["http-server", "dist", "-p", "3000"]
