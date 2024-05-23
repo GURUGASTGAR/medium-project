@@ -1,0 +1,35 @@
+- name: build & deploy docker container
+  hosts: dockerserver
+  gather_facts: false
+  remote_user: root
+  tasks:
+    - name: copy the files to remote server
+      delegate_to: localhost
+      shell: scp -v -r /var/lib/jenkins/workspace/ansible-jenkins-pipeline root@13.201.168.210:~/projects
+      register: scp_output
+
+    - name: Check if the Docker image exists
+      shell: "docker images -q medium:latest"
+      register: docker_image_id
+      ignore_errors: yes
+
+    - name: removing the previous container
+      become: true
+      shell: docker rm -f medium-container
+
+    - name: Remove Docker image if it exists
+      shell: "docker rmi medium:latest"
+      when: docker_image_id.stdout != ""
+      ignore_errors: yes
+
+    - name: building docker image
+      become: true
+      shell: docker build -t medium:latest ~/projects/ansible-jenkins-pipeline/frontend/
+
+    - name: running a container
+      become: true
+      shell: docker run -d --name medium-container -p 80:3000 medium:latest
+
+    - name: seeing docker containers
+      become: true
+      shell: docker ps -a
