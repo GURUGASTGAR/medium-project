@@ -4,6 +4,7 @@ import axios from "axios";
 import { BACKEND_URL } from "../config";
 
 import toast, { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const Publish = () => {
   return (
@@ -17,6 +18,7 @@ const Publish = () => {
 function Post(){
     const [title,setTitle] = useState("");
     const [content,setContent] = useState("");
+    const navigate = useNavigate()
     
         async function handleClick(){
            try {
@@ -34,6 +36,7 @@ function Post(){
             console.log(res)
             console.log("try")
             toast("posted")
+            navigate("/")
            } catch (error) {
              console.log(error)
              console.log("afaga ")
